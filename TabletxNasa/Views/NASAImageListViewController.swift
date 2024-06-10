@@ -103,11 +103,18 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
         
         NSLayoutConstraint.activate([
             searchBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            searchBar.widthAnchor.constraint(equalToConstant: 300),
-            searchBar.heightAnchor.constraint(equalToConstant: 44)
+            searchBar.widthAnchor.constraint(equalToConstant: 350),
+            searchBar.heightAnchor.constraint(equalToConstant: 60)
         ])
         
         activateSearchBarConstraints(pinToTop: false)
+        if let textField = searchBar.value(forKey: "searchField") as? UITextField {
+            textField.font = UIFont.systemFont(ofSize: 20)
+            textField.layer.cornerRadius = 30
+            textField.layer.masksToBounds = true
+        }
+        searchBar.layer.cornerRadius = 30
+        searchBar.layer.masksToBounds = true
     }
     
     private func activateSearchBarConstraints(pinToTop: Bool) {
