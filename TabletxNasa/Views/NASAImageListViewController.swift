@@ -15,6 +15,7 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
     private var dataSource: UICollectionViewDiffableDataSource<Section, NASAImage>
     private let refreshControl = UIRefreshControl()
     private let rocketAnimationView = RocketAnimationView(frame: CGRect(x: 0, y: 0, width: 50, height: 100))
+    private let blurView = SemiCircularBlurView(effect: UIBlurEffect(style: .light))
     private var currentQuery: String = ""
     private var cancellables = Set<AnyCancellable>()
     private var yearRangePickerView: YearRangePickerView
@@ -93,7 +94,7 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
     
     private func setupSearchBar() {
         searchBar.delegate = self
-        searchBar.placeholder = "Search NASA Images"
+        searchBar.placeholder = "NASA Images"
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchBar)
         
@@ -237,10 +238,19 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
     
     private func setupRefreshControl() {
         refreshControl.tintColor = .clear // Hide the default spinner
-        refreshControl.addSubview(rocketAnimationView)
+        
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        refreshControl.addSubview(blurView)
+        
         rocketAnimationView.translatesAutoresizingMaskIntoConstraints = false
+        refreshControl.addSubview(rocketAnimationView)
         
         NSLayoutConstraint.activate([
+            blurView.leadingAnchor.constraint(equalTo: refreshControl.leadingAnchor),
+            blurView.trailingAnchor.constraint(equalTo: refreshControl.trailingAnchor),
+            blurView.topAnchor.constraint(equalTo: refreshControl.topAnchor),
+            blurView.bottomAnchor.constraint(equalTo: refreshControl.bottomAnchor),
+            
             rocketAnimationView.centerXAnchor.constraint(equalTo: refreshControl.centerXAnchor),
             rocketAnimationView.centerYAnchor.constraint(equalTo: refreshControl.centerYAnchor),
             rocketAnimationView.widthAnchor.constraint(equalToConstant: 50),
@@ -275,10 +285,12 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
     
     @objc private func refreshData() {
         Task {
+            blurView.isHidden = false // Show blur view during refresh
             rocketAnimationView.resetAnimation() // Reset animation before starting a new one
             await viewModel.searchImages(query: currentQuery, startYear: startYear, endYear: endYear)
             refreshControl.endRefreshing()
             rocketAnimationView.startAnimation()
+            blurView.isHidden = true // Hide blur view after refresh
             loadMoreButton.isHidden = true // Ensure Load More button is hidden at the start
         }
     }

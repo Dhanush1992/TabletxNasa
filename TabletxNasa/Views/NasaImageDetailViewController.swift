@@ -63,28 +63,28 @@ class NASAImageDetailViewController: UIViewController {
     }
     
     private func setupTitleLabel() {
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
     }
     
     private func setupDescriptionTextView() {
-        descriptionTextView.font = UIFont.systemFont(ofSize: 16)
+        descriptionTextView.font = UIFont.preferredFont(forTextStyle: .body)
         descriptionTextView.isEditable = false
-        descriptionTextView.isScrollEnabled = true
+        descriptionTextView.isScrollEnabled = false
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(descriptionTextView)
     }
     
     private func setupPhotographerLabel() {
-        photographerLabel.font = UIFont.systemFont(ofSize: 16)
+        photographerLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         photographerLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(photographerLabel)
     }
     
     private func setupLocationLabel() {
-        locationLabel.font = UIFont.systemFont(ofSize: 16)
+        locationLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         locationLabel.numberOfLines = 0
         locationLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(locationLabel)
@@ -92,27 +92,26 @@ class NASAImageDetailViewController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
             imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 0.75),
             
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
-            photographerLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            photographerLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             photographerLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             photographerLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
-            locationLabel.topAnchor.constraint(equalTo: photographerLabel.bottomAnchor, constant: 16),
+            locationLabel.topAnchor.constraint(equalTo: photographerLabel.bottomAnchor, constant: 8),
             locationLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             locationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
             descriptionTextView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 16),
             descriptionTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             descriptionTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            descriptionTextView.heightAnchor.constraint(equalToConstant: 200),
             descriptionTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
