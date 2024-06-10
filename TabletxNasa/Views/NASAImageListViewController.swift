@@ -427,7 +427,9 @@ extension NASAImageListViewController: UICollectionViewDelegate {
         let frameHeight = scrollView.frame.size.height
         
         if contentOffsetY > contentHeight - frameHeight * 1.5 {
-            loadMoreButton.isHidden = false
+            if searchBar.text != "" {
+                loadMoreButton.isHidden = false
+            }
         } else {
             loadMoreButton.isHidden = true
         }
