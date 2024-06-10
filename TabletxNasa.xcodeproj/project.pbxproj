@@ -7,15 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D4B772F2C14DD24008BFF65 /* NasaImageDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B772E2C14DD24008BFF65 /* NasaImageDetailViewModel.swift */; };
+		6D4B77332C15D82E008BFF65 /* YearRangePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B77322C15D82E008BFF65 /* YearRangePickerView.swift */; };
 		6DC131DC2C1441A200B7F2FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC131DB2C1441A200B7F2FE /* AppDelegate.swift */; };
 		6DC131DE2C1441A200B7F2FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC131DD2C1441A200B7F2FE /* SceneDelegate.swift */; };
-		6DC131E02C1441A200B7F2FE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC131DF2C1441A200B7F2FE /* ViewController.swift */; };
-		6DC131E32C1441A200B7F2FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DC131E12C1441A200B7F2FE /* Main.storyboard */; };
+		6DC131E02C1441A200B7F2FE /* NASAImageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC131DF2C1441A200B7F2FE /* NASAImageListViewController.swift */; };
 		6DC131E52C1441A600B7F2FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DC131E42C1441A600B7F2FE /* Assets.xcassets */; };
 		6DC131E82C1441A600B7F2FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DC131E62C1441A600B7F2FE /* LaunchScreen.storyboard */; };
 		6DC131F32C1441A600B7F2FE /* TabletxNasaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC131F22C1441A600B7F2FE /* TabletxNasaTests.swift */; };
-		6DC131FD2C1441A600B7F2FE /* TabletxNasaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC131FC2C1441A600B7F2FE /* TabletxNasaUITests.swift */; };
-		6DC131FF2C1441A600B7F2FE /* TabletxNasaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC131FE2C1441A600B7F2FE /* TabletxNasaUITestsLaunchTests.swift */; };
+		6DC1320D2C14421B00B7F2FE /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC1320C2C14421B00B7F2FE /* Models.swift */; };
+		6DC132132C1442A400B7F2FE /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC132122C1442A400B7F2FE /* NetworkService.swift */; };
+		6DC132152C14466200B7F2FE /* NasaImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC132142C14466200B7F2FE /* NasaImageViewModel.swift */; };
+		6DC132172C1446D200B7F2FE /* NasaImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC132162C1446D200B7F2FE /* NasaImageCell.swift */; };
+		6DC132192C1446FC00B7F2FE /* NasaImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC132182C1446FC00B7F2FE /* NasaImageDetailViewController.swift */; };
+		6DC1321D2C146CCE00B7F2FE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC1321C2C146CCE00B7F2FE /* ImageCache.swift */; };
+		6DC1321F2C146FCE00B7F2FE /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC1321E2C146FCE00B7F2FE /* APIError.swift */; };
+		6DC132232C14AE8900B7F2FE /* RocketAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC132222C14AE8900B7F2FE /* RocketAnimationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,19 +43,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6D4B772E2C14DD24008BFF65 /* NasaImageDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasaImageDetailViewModel.swift; sourceTree = "<group>"; };
+		6D4B77322C15D82E008BFF65 /* YearRangePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearRangePickerView.swift; sourceTree = "<group>"; };
 		6DC131D82C1441A200B7F2FE /* TabletxNasa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabletxNasa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DC131DB2C1441A200B7F2FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6DC131DD2C1441A200B7F2FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6DC131DF2C1441A200B7F2FE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		6DC131E22C1441A200B7F2FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6DC131DF2C1441A200B7F2FE /* NASAImageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASAImageListViewController.swift; sourceTree = "<group>"; };
 		6DC131E42C1441A600B7F2FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6DC131E72C1441A600B7F2FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6DC131E92C1441A600B7F2FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6DC131EE2C1441A600B7F2FE /* TabletxNasaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabletxNasaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DC131F22C1441A600B7F2FE /* TabletxNasaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabletxNasaTests.swift; sourceTree = "<group>"; };
 		6DC131F82C1441A600B7F2FE /* TabletxNasaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabletxNasaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6DC131FC2C1441A600B7F2FE /* TabletxNasaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabletxNasaUITests.swift; sourceTree = "<group>"; };
-		6DC131FE2C1441A600B7F2FE /* TabletxNasaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabletxNasaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6DC1320C2C14421B00B7F2FE /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		6DC132122C1442A400B7F2FE /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		6DC132142C14466200B7F2FE /* NasaImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasaImageViewModel.swift; sourceTree = "<group>"; };
+		6DC132162C1446D200B7F2FE /* NasaImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasaImageCell.swift; sourceTree = "<group>"; };
+		6DC132182C1446FC00B7F2FE /* NasaImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasaImageDetailViewController.swift; sourceTree = "<group>"; };
+		6DC1321C2C146CCE00B7F2FE /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		6DC1321E2C146FCE00B7F2FE /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		6DC132222C14AE8900B7F2FE /* RocketAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketAnimationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +95,6 @@
 			children = (
 				6DC131DA2C1441A200B7F2FE /* TabletxNasa */,
 				6DC131F12C1441A600B7F2FE /* TabletxNasaTests */,
-				6DC131FB2C1441A600B7F2FE /* TabletxNasaUITests */,
 				6DC131D92C1441A200B7F2FE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,10 +112,13 @@
 		6DC131DA2C1441A200B7F2FE /* TabletxNasa */ = {
 			isa = PBXGroup;
 			children = (
+				6DC1321B2C146CB700B7F2FE /* Utilities */,
+				6DC132112C14427400B7F2FE /* Views */,
+				6DC132102C14426200B7F2FE /* Services */,
+				6DC1320F2C14425400B7F2FE /* ViewModels */,
+				6DC1320B2C1441DC00B7F2FE /* Models */,
 				6DC131DB2C1441A200B7F2FE /* AppDelegate.swift */,
 				6DC131DD2C1441A200B7F2FE /* SceneDelegate.swift */,
-				6DC131DF2C1441A200B7F2FE /* ViewController.swift */,
-				6DC131E12C1441A200B7F2FE /* Main.storyboard */,
 				6DC131E42C1441A600B7F2FE /* Assets.xcassets */,
 				6DC131E62C1441A600B7F2FE /* LaunchScreen.storyboard */,
 				6DC131E92C1441A600B7F2FE /* Info.plist */,
@@ -118,13 +134,50 @@
 			path = TabletxNasaTests;
 			sourceTree = "<group>";
 		};
-		6DC131FB2C1441A600B7F2FE /* TabletxNasaUITests */ = {
+		6DC1320B2C1441DC00B7F2FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6DC131FC2C1441A600B7F2FE /* TabletxNasaUITests.swift */,
-				6DC131FE2C1441A600B7F2FE /* TabletxNasaUITestsLaunchTests.swift */,
+				6DC1320C2C14421B00B7F2FE /* Models.swift */,
 			);
-			path = TabletxNasaUITests;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6DC1320F2C14425400B7F2FE /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				6DC132142C14466200B7F2FE /* NasaImageViewModel.swift */,
+				6D4B772E2C14DD24008BFF65 /* NasaImageDetailViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		6DC132102C14426200B7F2FE /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6DC132122C1442A400B7F2FE /* NetworkService.swift */,
+				6DC1321E2C146FCE00B7F2FE /* APIError.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		6DC132112C14427400B7F2FE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6DC131DF2C1441A200B7F2FE /* NASAImageListViewController.swift */,
+				6DC132182C1446FC00B7F2FE /* NasaImageDetailViewController.swift */,
+				6DC132162C1446D200B7F2FE /* NasaImageCell.swift */,
+				6DC132222C14AE8900B7F2FE /* RocketAnimationView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6DC1321B2C146CB700B7F2FE /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				6DC1321C2C146CCE00B7F2FE /* ImageCache.swift */,
+				6D4B77322C15D82E008BFF65 /* YearRangePickerView.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,7 +286,6 @@
 			files = (
 				6DC131E82C1441A600B7F2FE /* LaunchScreen.storyboard in Resources */,
 				6DC131E52C1441A600B7F2FE /* Assets.xcassets in Resources */,
-				6DC131E32C1441A200B7F2FE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,9 +310,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DC131E02C1441A200B7F2FE /* ViewController.swift in Sources */,
+				6D4B772F2C14DD24008BFF65 /* NasaImageDetailViewModel.swift in Sources */,
+				6DC132132C1442A400B7F2FE /* NetworkService.swift in Sources */,
+				6DC132152C14466200B7F2FE /* NasaImageViewModel.swift in Sources */,
+				6DC131E02C1441A200B7F2FE /* NASAImageListViewController.swift in Sources */,
+				6DC1321F2C146FCE00B7F2FE /* APIError.swift in Sources */,
+				6DC1321D2C146CCE00B7F2FE /* ImageCache.swift in Sources */,
+				6DC132172C1446D200B7F2FE /* NasaImageCell.swift in Sources */,
 				6DC131DC2C1441A200B7F2FE /* AppDelegate.swift in Sources */,
 				6DC131DE2C1441A200B7F2FE /* SceneDelegate.swift in Sources */,
+				6D4B77332C15D82E008BFF65 /* YearRangePickerView.swift in Sources */,
+				6DC132192C1446FC00B7F2FE /* NasaImageDetailViewController.swift in Sources */,
+				6DC1320D2C14421B00B7F2FE /* Models.swift in Sources */,
+				6DC132232C14AE8900B7F2FE /* RocketAnimationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,8 +338,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DC131FF2C1441A600B7F2FE /* TabletxNasaUITestsLaunchTests.swift in Sources */,
-				6DC131FD2C1441A600B7F2FE /* TabletxNasaUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,14 +357,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		6DC131E12C1441A200B7F2FE /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6DC131E22C1441A200B7F2FE /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		6DC131E62C1441A600B7F2FE /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -447,7 +499,6 @@
 				INFOPLIST_FILE = TabletxNasa/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -458,6 +509,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dhanush.TabletxNasa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -475,7 +527,6 @@
 				INFOPLIST_FILE = TabletxNasa/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -486,6 +537,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dhanush.TabletxNasa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
