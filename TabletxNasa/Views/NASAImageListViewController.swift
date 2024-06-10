@@ -121,7 +121,7 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
         view.addSubview(yearRangePickerView)
         
         yearLabel.translatesAutoresizingMaskIntoConstraints = false
-        yearLabel.text = "YEAR PUBLISHED:"
+        yearLabel.text = "Between Years"
         view.addSubview(yearLabel)
         
         yearRangePickerHeightConstraint = yearRangePickerView.heightAnchor.constraint(equalToConstant: 100)
@@ -149,6 +149,7 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
         itemsPerRowSlider.minimumValue = 1
         itemsPerRowSlider.maximumValue = 5
         itemsPerRowSlider.value = Float(itemsPerRow)
+        itemsPerRowSlider.tintColor = .black
         itemsPerRowSlider.addTarget(self, action: #selector(itemsPerRowSliderChanged(_:)), for: .valueChanged)
         itemsPerRowSlider.translatesAutoresizingMaskIntoConstraints = false
         
