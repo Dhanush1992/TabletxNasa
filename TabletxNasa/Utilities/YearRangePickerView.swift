@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 protocol YearRangePickerViewDelegate: AnyObject {
     func didSelectYearRange(startYear: Int, endYear: Int)
 }

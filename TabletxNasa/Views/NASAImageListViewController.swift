@@ -292,12 +292,19 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
     
     @objc private func refreshData() {
         Task {
-            blurView.isHidden = false // Show blur view during refresh
+            UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) {
+                self.blurView.alpha = 1.0
+            }.startAnimation()
+            
             rocketAnimationView.resetAnimation() // Reset animation before starting a new one
             await viewModel.searchImages(query: currentQuery, startYear: startYear, endYear: endYear)
             refreshControl.endRefreshing()
             rocketAnimationView.startAnimation()
-            blurView.isHidden = true // Hide blur view after refresh
+            
+            UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) {
+                self.blurView.alpha = 0.0
+            }.startAnimation()
+            
             loadMoreButton.isHidden = true // Ensure Load More button is hidden at the start
         }
     }
@@ -354,7 +361,6 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
         layout.minimumLineSpacing = spacing
     }
     
-    @MainActor
     func didSelectYearRange(startYear: Int, endYear: Int) {
         self.startYear = startYear
         self.endYear = endYear

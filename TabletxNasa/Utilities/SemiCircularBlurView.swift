@@ -5,45 +5,46 @@
 //  Created by Dhanush Thotadur Divakara on 6/10/24.
 //
 
-import Foundation
 import UIKit
 
 class SemiCircularBlurView: UIVisualEffectView {
-    
+
     override init(effect: UIVisualEffect?) {
         super.init(effect: effect)
-        setupMask()
+        setupView()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupMask()
+        setupView()
     }
-    
-    private func setupMask() {
-        let maskLayer = CAShapeLayer()
-        maskLayer.path = createSemiCircularPath().cgPath
-        self.layer.mask = maskLayer
+
+    private func setupView() {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.backgroundColor = .clear
+        self.isUserInteractionEnabled = false
+        self.layer.masksToBounds = true
     }
-    
-    private func createSemiCircularPath() -> UIBezierPath {
-        let width = self.bounds.width
-        let height = self.bounds.height
-        let radius = height / 2
-        
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: 0))
-        path.addArc(withCenter: CGPoint(x: width / 2, y: -radius), radius: radius, startAngle: 0, endAngle: CGFloat.pi, clockwise: true)
-        path.addLine(to: CGPoint(x: width, y: 0))
-        path.addLine(to: CGPoint(x: width, y: height))
-        path.addLine(to: CGPoint(x: 0, y: height))
-        path.close()
-        
-        return path
-    }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        setupMask()
+        applyMask()
+    }
+
+    private func applyMask() {
+        let maskLayer = CAShapeLayer()
+        let path = UIBezierPath()
+
+        let radius = self.bounds.width / 4
+        let center = CGPoint(x: self.bounds.width / 2, y: self.bounds.height)
+
+        path.addArc(withCenter: center, radius: radius, startAngle: CGFloat.pi, endAngle: 0, clockwise: true)
+        path.addLine(to: CGPoint(x: self.bounds.width, y: self.bounds.height))
+        path.addLine(to: CGPoint(x: 0, y: self.bounds.height))
+        path.close()
+
+        maskLayer.path = path.cgPath
+        self.layer.mask = maskLayer
     }
 }
+
