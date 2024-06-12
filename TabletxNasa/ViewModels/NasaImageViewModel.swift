@@ -97,7 +97,7 @@ class NASAImageViewModel: NASAImageViewModelProtocol {
         onImagesUpdated?()
     }
     
-    func handleFetchError(_ error: Error) {
+    private func handleFetchError(_ error: Error) {
         onFetchError?(error)
     }
     

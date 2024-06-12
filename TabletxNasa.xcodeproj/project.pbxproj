@@ -33,13 +33,6 @@
 			remoteGlobalIDString = 6DC131D72C1441A200B7F2FE;
 			remoteInfo = TabletxNasa;
 		};
-		6DC131F92C1441A600B7F2FE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6DC131D02C1441A200B7F2FE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6DC131D72C1441A200B7F2FE;
-			remoteInfo = TabletxNasa;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +47,6 @@
 		6DC131E92C1441A600B7F2FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6DC131EE2C1441A600B7F2FE /* TabletxNasaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabletxNasaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DC131F22C1441A600B7F2FE /* TabletxNasaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabletxNasaTests.swift; sourceTree = "<group>"; };
-		6DC131F82C1441A600B7F2FE /* TabletxNasaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabletxNasaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DC1320C2C14421B00B7F2FE /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		6DC132122C1442A400B7F2FE /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		6DC132142C14466200B7F2FE /* NasaImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasaImageViewModel.swift; sourceTree = "<group>"; };
@@ -80,13 +72,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6DC131F52C1441A600B7F2FE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -104,7 +89,6 @@
 			children = (
 				6DC131D82C1441A200B7F2FE /* TabletxNasa.app */,
 				6DC131EE2C1441A600B7F2FE /* TabletxNasaTests.xctest */,
-				6DC131F82C1441A600B7F2FE /* TabletxNasaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -218,24 +202,6 @@
 			productReference = 6DC131EE2C1441A600B7F2FE /* TabletxNasaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		6DC131F72C1441A600B7F2FE /* TabletxNasaUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6DC132082C1441A600B7F2FE /* Build configuration list for PBXNativeTarget "TabletxNasaUITests" */;
-			buildPhases = (
-				6DC131F42C1441A600B7F2FE /* Sources */,
-				6DC131F52C1441A600B7F2FE /* Frameworks */,
-				6DC131F62C1441A600B7F2FE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6DC131FA2C1441A600B7F2FE /* PBXTargetDependency */,
-			);
-			name = TabletxNasaUITests;
-			productName = TabletxNasaUITests;
-			productReference = 6DC131F82C1441A600B7F2FE /* TabletxNasaUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -250,10 +216,6 @@
 						CreatedOnToolsVersion = 15.1;
 					};
 					6DC131ED2C1441A600B7F2FE = {
-						CreatedOnToolsVersion = 15.1;
-						TestTargetID = 6DC131D72C1441A200B7F2FE;
-					};
-					6DC131F72C1441A600B7F2FE = {
 						CreatedOnToolsVersion = 15.1;
 						TestTargetID = 6DC131D72C1441A200B7F2FE;
 					};
@@ -274,7 +236,6 @@
 			targets = (
 				6DC131D72C1441A200B7F2FE /* TabletxNasa */,
 				6DC131ED2C1441A600B7F2FE /* TabletxNasaTests */,
-				6DC131F72C1441A600B7F2FE /* TabletxNasaUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -290,13 +251,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		6DC131EC2C1441A600B7F2FE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6DC131F62C1441A600B7F2FE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -334,13 +288,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6DC131F42C1441A600B7F2FE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -348,11 +295,6 @@
 			isa = PBXTargetDependency;
 			target = 6DC131D72C1441A200B7F2FE /* TabletxNasa */;
 			targetProxy = 6DC131EF2C1441A600B7F2FE /* PBXContainerItemProxy */;
-		};
-		6DC131FA2C1441A600B7F2FE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6DC131D72C1441A200B7F2FE /* TabletxNasa */;
-			targetProxy = 6DC131F92C1441A600B7F2FE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -583,42 +525,6 @@
 			};
 			name = Release;
 		};
-		6DC132092C1441A600B7F2FE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = A3T35WB49A;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dhanush.TabletxNasaUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TabletxNasa;
-			};
-			name = Debug;
-		};
-		6DC1320A2C1441A600B7F2FE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = A3T35WB49A;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dhanush.TabletxNasaUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TabletxNasa;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -645,15 +551,6 @@
 			buildConfigurations = (
 				6DC132062C1441A600B7F2FE /* Debug */,
 				6DC132072C1441A600B7F2FE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6DC132082C1441A600B7F2FE /* Build configuration list for PBXNativeTarget "TabletxNasaUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6DC132092C1441A600B7F2FE /* Debug */,
-				6DC1320A2C1441A600B7F2FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

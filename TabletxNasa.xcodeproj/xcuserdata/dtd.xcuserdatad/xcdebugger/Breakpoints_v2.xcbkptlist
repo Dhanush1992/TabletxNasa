@@ -42,53 +42,5 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "45B1EED8-0344-4AFD-B74C-3546ADB948AB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TabletxNasa/Services/NetworkService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "fetchImages(searchQuery:page:startYear:endYear:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "45B1EED8-0344-4AFD-B74C-3546ADB948AB - 1cf959118ca11d1d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for TabletxNasa.NetworkService.fetchImages(searchQuery: Swift.String, page: Swift.Int) async throws -&gt; Swift.Array&lt;TabletxNasa.NASAImage&gt;"
-                  moduleName = "TabletxNasa"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dtd/iOSKata/TabletxNasa/TabletxNasa/Services/NetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
-                  offsetFromSymbolStart = "268">
-               </Location>
-               <Location
-                  uuid = "45B1EED8-0344-4AFD-B74C-3546ADB948AB - 4e9de0a74f359b78"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for TabletxNasa.NetworkService.fetchImages(searchQuery: Swift.String, page: Swift.Int, startYear: Swift.Int, endYear: Swift.Int) async throws -&gt; Swift.Array&lt;TabletxNasa.NASAImage&gt;"
-                  moduleName = "TabletxNasa"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dtd/iOSKata/TabletxNasa/TabletxNasa/Services/NetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
-                  offsetFromSymbolStart = "308">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -37,3 +37,21 @@ extension APIError: LocalizedError {
         }
     }
 }
+
+extension APIError: Equatable {
+    static func ==(lhs: APIError, rhs: APIError) -> Bool {
+        switch (lhs, rhs) {
+        case (.invalidURL, .invalidURL):
+            return true
+        case (.invalidResponse, .invalidResponse):
+            return true
+        case (.decodingFailed, .decodingFailed):
+            return true
+        case let (.statusCode(lhsCode), .statusCode(rhsCode)):
+            return lhsCode == rhsCode
+        default:
+            return false
+        }
+    }
+}
+
