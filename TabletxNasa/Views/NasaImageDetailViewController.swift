@@ -4,6 +4,7 @@
 //
 //  Created by Dhanush Thotadur Divakara on 6/8/24.
 //
+
 import UIKit
 
 class NASAImageDetailViewController: UIViewController {
@@ -16,6 +17,7 @@ class NASAImageDetailViewController: UIViewController {
     private let descriptionTextView = UITextView()
     private let photographerLabel = UILabel()
     private let locationLabel = UILabel()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,7 @@ class NASAImageDetailViewController: UIViewController {
         setupDescriptionTextView()
         setupPhotographerLabel()
         setupLocationLabel()
+        setupActivityIndicator()
         setupConstraints()
         configureView()
     }
@@ -90,6 +93,16 @@ class NASAImageDetailViewController: UIViewController {
         contentView.addSubview(locationLabel)
     }
     
+    private func setupActivityIndicator() {
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
@@ -122,14 +135,25 @@ class NASAImageDetailViewController: UIViewController {
         photographerLabel.text = "Photographer: \(viewModel.photographer)"
         locationLabel.text = "Location: \(viewModel.location)"
         
-        Task {
-            if let url = viewModel.imageURL {
-                await viewModel.loadImage(for: url, forKey: url.absoluteString) { [weak self] loadedImage in
+        if let url = viewModel.imageURL {
+            activityIndicator.startAnimating()
+            Task { [weak self] in
+                guard let self = self else { return }
+                await self.viewModel.loadImage(for: url, forKey: url.absoluteString) { result in
                     DispatchQueue.main.async {
-                        self?.imageView.image = loadedImage
+                        self.activityIndicator.stopAnimating()
+                        switch result {
+                        case .success(let image):
+                            self.imageView.image = image
+                        case .failure(let error):
+                            print("Failed to load image: \(error)")
+                            self.imageView.image = UIImage(systemName: "photo")
+                        }
                     }
                 }
             }
+        } else {
+            imageView.image = UIImage(systemName: "photo")
         }
     }
 }

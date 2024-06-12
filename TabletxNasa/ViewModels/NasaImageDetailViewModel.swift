@@ -15,15 +15,17 @@ protocol NASAImageDetailViewModelProtocol {
     var location: String { get }
     var imageURL: URL? { get }
     
-    func loadImage(for url: URL,forKey key: String, completion: @escaping @Sendable (UIImage?) -> Void) async
+    func loadImage(for url: URL, forKey key: String, completion: @escaping @Sendable (Result<UIImage, Error>) -> Void) async
 }
 
 class NASAImageDetailViewModel: NASAImageDetailViewModelProtocol {
     private let image: NASAImage
+    private let networkService: NetworkServiceProtocol
     private let imageCache: ImageCacheProtocol
     
-    init(image: NASAImage, imageCache: ImageCacheProtocol = ImageCache.shared) {
+    init(image: NASAImage, networkService: NetworkServiceProtocol = NetworkService.shared, imageCache: ImageCacheProtocol = ImageCache.shared) {
         self.image = image
+        self.networkService = networkService
         self.imageCache = imageCache
     }
     
@@ -47,28 +49,28 @@ class NASAImageDetailViewModel: NASAImageDetailViewModelProtocol {
         return URL(string: image.url)
     }
     
-    func loadImage(for url: URL, forKey key: String, completion: @escaping @Sendable (UIImage?) -> Void) async {
-        if let cachedImage = await ImageCache.shared.getImage(forKey: key) {
+    func loadImage(for url: URL, forKey key: String, completion: @escaping @Sendable (Result<UIImage, Error>) -> Void) async {
+        if let cachedImage = await imageCache.getImage(forKey: key) {
             DispatchQueue.main.async {
-                completion(cachedImage)
+                completion(.success(cachedImage))
             }
         } else {
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
+            let result = await networkService.fetchImageData(from: url)
+            switch result {
+            case .success(let data):
                 if let downloadedImage = UIImage(data: data) {
-                    await ImageCache.shared.setImage(downloadedImage, forKey: key)
+                    await imageCache.setImage(downloadedImage, forKey: key)
                     DispatchQueue.main.async {
-                        completion(downloadedImage)
+                        completion(.success(downloadedImage))
                     }
                 } else {
                     DispatchQueue.main.async {
-                        completion(nil)
+                        completion(.failure(APIError.decodingFailed))
                     }
                 }
-            } catch {
-                print("Failed to load image: \(error)")
+            case .failure(let error):
                 DispatchQueue.main.async {
-                    completion(nil)
+                    completion(.failure(error))
                 }
             }
         }

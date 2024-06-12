@@ -1,127 +1,33 @@
 //
-//  TabletxNasaTests.swift
+//  MockServices.swift
 //  TabletxNasaTests
 //
-//  Created by Dhanush Thotadur Divakara on 6/8/24.
+//  Created by Dhanush Thotadur Divakara on 6/13/24.
 //
 
-import XCTest
+import Foundation
 import Combine
+import UIKit
 @testable import TabletxNasa
 
-final class NASAImageViewModelTests: XCTestCase {
-    var viewModel: NASAImageViewModel!
-    var cancellables: Set<AnyCancellable>!
-
-    override func setUp() {
-        super.setUp()
-        cancellables = Set<AnyCancellable>()
-        let mockNetworkService = MockNetworkService()
-        let mockImageCache = MockImageCache()
-        viewModel = NASAImageViewModel(networkService: mockNetworkService, imageCache: mockImageCache)
-    }
-
-    override func tearDown() {
-        viewModel = nil
-        cancellables = nil
-        super.tearDown()
-    }
-
-    func testSearchImagesSuccess() async {
-        let expectation = XCTestExpectation(description: "Fetch images successfully")
-
-        viewModel.onImagesUpdated = {
-            expectation.fulfill()
-        }
-
-        await viewModel.searchImages(query: "Earth", startYear: 1920, endYear: 2024)
-
-        await fulfillment(of: [expectation], timeout: 5.0)
-
-        XCTAssertEqual(viewModel.images.count, 2)
-        XCTAssertEqual(viewModel.images[0].title, "The Earth & Moon")
-        XCTAssertEqual(viewModel.images[1].title, "Earth - India and Australia")
-    }
-
-    func testSearchImagesFailure() async {
-        let expectation = XCTestExpectation(description: "Fail to fetch images")
-
-        // Modify mock response to trigger a decoding error
-        let mockNetworkService = MockNetworkService()
-        mockNetworkService.mockResponse = "{ \"invalid\": \"response\" }"
-        viewModel = NASAImageViewModel(networkService: mockNetworkService, imageCache: MockImageCache())
-
-        viewModel.onFetchError = { error in
-            XCTAssertEqual(error as? APIError, APIError.decodingFailed)
-            expectation.fulfill()
-        }
-
-        await viewModel.searchImages(query: "Earth", startYear: 1920, endYear: 2024)
-
-        await fulfillment(of: [expectation], timeout: 5.0)
-    }
-
-    func testLoadMoreImagesSuccess() async {
-        await viewModel.searchImages(query: "Earth", startYear: 1920, endYear: 2024)
-
-        XCTAssertEqual(viewModel.images.count, 2)
-
-        await viewModel.loadMoreImages(startYear: 1920, endYear: 2024)
-
-        XCTAssertEqual(viewModel.images.count, 4)
-    }
-
-    func testLoadImageSuccess() async {
-        let expectation = XCTestExpectation(description: "Load image successfully")
-
-        let url = URL(string: "https://images-assets.nasa.gov/image/PIA00342/PIA00342~thumb.jpg")!
-        await viewModel.loadImage(for: url, forKey: "PIA00342") { result in
-            switch result {
-            case .success(let image):
-                XCTAssertNotNil(image)
-                expectation.fulfill()
-            case .failure:
-                XCTFail("Image load failed")
-            }
-        }
-
-        await fulfillment(of: [expectation], timeout: 5.0)
-    }
-
-    func testLoadImageFailure() async {
-        let expectation = XCTestExpectation(description: "Fail to load image")
-
-        // Mock an invalid URL to trigger a failure
-        let url = URL(string: "https://invalid-url")!
-        await viewModel.loadImage(for: url, forKey: "InvalidKey") { result in
-            switch result {
-            case .success:
-                XCTFail("Image load should have failed")
-            case .failure:
-                expectation.fulfill()
-            }
-        }
-
-        await fulfillment(of: [expectation], timeout: 5.0)
-    }
-}
-
-class MockImageCache: ImageCacheProtocol {
-    private var cache = [String: UIImage]()
-
-    func getImage(forKey key: String) async -> UIImage? {
-        return cache[key]
-    }
-
-    func setImage(_ image: UIImage, forKey key: String) async {
-        cache[key] = image
-    }
-}
-
+// Mock Network Service
 class MockNetworkService: NetworkServiceProtocol {
     var mockResponse: String?
+    var shouldReturnInvalidImage = false
+    var shouldReturnNetworkError = false
+    var shouldReturnDecodingError = false
+    var shouldReturnTimeoutError = false
 
     func fetchImages(searchQuery: String, page: Int, startYear: Int, endYear: Int) async -> Result<[NASAImage], Error> {
+        if shouldReturnNetworkError {
+            return .failure(URLError(.notConnectedToInternet))
+        }
+        if shouldReturnTimeoutError {
+            return .failure(URLError(.timedOut))
+        }
+        if shouldReturnDecodingError {
+            return .failure(APIError.decodingFailed)
+        }
         if let response = mockResponse, response == "{ \"invalid\": \"response\" }" {
             return .failure(APIError.decodingFailed)
         }
@@ -207,5 +113,35 @@ class MockNetworkService: NetworkServiceProtocol {
         } catch {
             return .failure(APIError.decodingFailed)
         }
+    }
+    
+    func fetchImageData(from url: URL) async -> Result<Data, Error> {
+        if url.absoluteString == "invalid-url" {
+            return .failure(URLError(.unsupportedURL))
+        }
+        if shouldReturnNetworkError {
+            return .failure(URLError(.notConnectedToInternet))
+        }
+        
+        if shouldReturnInvalidImage {
+            return .success(Data()) // Return invalid image data
+        }
+        
+        let imageData = UIImage(systemName: "photo")!.pngData()!
+        return .success(imageData)
+    }
+}
+
+
+// Mock Image Cache
+class MockImageCache: ImageCacheProtocol {
+    private var cache = [String: UIImage]()
+
+    func getImage(forKey key: String) async -> UIImage? {
+        return cache[key]
+    }
+
+    func setImage(_ image: UIImage, forKey key: String) async {
+        cache[key] = image
     }
 }

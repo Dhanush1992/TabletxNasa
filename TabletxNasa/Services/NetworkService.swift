@@ -9,6 +9,7 @@ import Foundation
 
 protocol NetworkServiceProtocol {
     func fetchImages(searchQuery: String, page: Int, startYear: Int, endYear: Int) async -> Result<[NASAImage], Error>
+    func fetchImageData(from url: URL) async -> Result<Data, Error>
 }
 
 class NetworkService: NetworkServiceProtocol {
@@ -52,6 +53,20 @@ class NetworkService: NetworkServiceProtocol {
             default:
                 return .failure(APIError.statusCode(httpResponse.statusCode))
             }
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    func fetchImageData(from url: URL) async -> Result<Data, Error> {
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                return .failure(APIError.invalidResponse)
+            }
+            
+            return .success(data)
         } catch {
             return .failure(error)
         }
