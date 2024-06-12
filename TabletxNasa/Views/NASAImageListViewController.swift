@@ -25,7 +25,6 @@ class NASAImageListViewController: UIViewController {
     private var itemsPerRowLabel: UILabel
     private var filterButton: UIBarButtonItem
     private var loadMoreButton: UIButton
-    private var progressView: ProgressView?
     
     private var isSearchBarPinnedToTop = false
     private var searchBarTopConstraint: NSLayoutConstraint!
@@ -254,7 +253,7 @@ class NASAImageListViewController: UIViewController {
         
         viewModel.shouldShowDefaultView = { [weak self] shouldShow in
             DispatchQueue.main.async {
-                self?.progressView?.isHidden = shouldShow
+                self?.collectionView.isHidden = shouldShow
             }
         }
         
@@ -312,23 +311,19 @@ class NASAImageListViewController: UIViewController {
     // MARK: - Action Methods
     
     @objc private func refreshData() {
-        progressView?.startAnimating()
         Task {
             rocketAnimationView.resetAnimation() // Reset animation before starting a new one
             await viewModel.searchImages(query: currentQuery, startYear: startYear, endYear: endYear)
             refreshControl.endRefreshing()
             rocketAnimationView.startAnimation()
             loadMoreButton.isHidden = true // Ensure Load More button is hidden at the start
-            progressView?.stopAnimating()
         }
     }
     
     @objc private func loadMoreImages() {
         Task {
-            progressView?.startAnimating()
             await viewModel.loadMoreImages(startYear: startYear, endYear: endYear)
             loadMoreButton.isHidden = true
-            progressView?.stopAnimating()
         }
     }
     
