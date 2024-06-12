@@ -48,7 +48,7 @@ class NetworkService: NetworkServiceProtocol {
                     )
                 }
                 return .success(images)
-            case 400, 401, 403, 404, 500:
+            case 400, 401, 403, 404, 500: // I could've added ranges, but explicit to show what would be handled typically
                 return .failure(APIError.statusCode(httpResponse.statusCode))
             default:
                 return .failure(APIError.statusCode(httpResponse.statusCode))

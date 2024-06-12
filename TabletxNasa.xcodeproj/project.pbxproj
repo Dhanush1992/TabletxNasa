@@ -11,6 +11,7 @@
 		6D4B77332C15D82E008BFF65 /* YearRangePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B77322C15D82E008BFF65 /* YearRangePickerView.swift */; };
 		6DA4B9A32C1A2EF200ADFAFA /* NASAImageDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA4B9A22C1A2EF200ADFAFA /* NASAImageDetailViewModelTests.swift */; };
 		6DA4B9A52C1A2F5000ADFAFA /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA4B9A42C1A2F5000ADFAFA /* Mocks.swift */; };
+		6DA4B9A72C1A3FA900ADFAFA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 6DA4B9A62C1A3FA900ADFAFA /* README.md */; };
 		6DC131DC2C1441A200B7F2FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC131DB2C1441A200B7F2FE /* AppDelegate.swift */; };
 		6DC131DE2C1441A200B7F2FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC131DD2C1441A200B7F2FE /* SceneDelegate.swift */; };
 		6DC131E02C1441A200B7F2FE /* NASAImageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC131DF2C1441A200B7F2FE /* NASAImageListViewController.swift */; };
@@ -20,8 +21,8 @@
 		6DC1320D2C14421B00B7F2FE /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC1320C2C14421B00B7F2FE /* Models.swift */; };
 		6DC132132C1442A400B7F2FE /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC132122C1442A400B7F2FE /* NetworkService.swift */; };
 		6DC132152C14466200B7F2FE /* NasaImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC132142C14466200B7F2FE /* NasaImageViewModel.swift */; };
-		6DC132172C1446D200B7F2FE /* NasaImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC132162C1446D200B7F2FE /* NasaImageCell.swift */; };
-		6DC132192C1446FC00B7F2FE /* NasaImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC132182C1446FC00B7F2FE /* NasaImageDetailViewController.swift */; };
+		6DC132172C1446D200B7F2FE /* NASAImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC132162C1446D200B7F2FE /* NASAImageCell.swift */; };
+		6DC132192C1446FC00B7F2FE /* NASAImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC132182C1446FC00B7F2FE /* NASAImageDetailViewController.swift */; };
 		6DC1321D2C146CCE00B7F2FE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC1321C2C146CCE00B7F2FE /* ImageCache.swift */; };
 		6DC1321F2C146FCE00B7F2FE /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC1321E2C146FCE00B7F2FE /* APIError.swift */; };
 		6DC132232C14AE8900B7F2FE /* RocketAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC132222C14AE8900B7F2FE /* RocketAnimationView.swift */; };
@@ -42,6 +43,7 @@
 		6D4B77322C15D82E008BFF65 /* YearRangePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearRangePickerView.swift; sourceTree = "<group>"; };
 		6DA4B9A22C1A2EF200ADFAFA /* NASAImageDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASAImageDetailViewModelTests.swift; sourceTree = "<group>"; };
 		6DA4B9A42C1A2F5000ADFAFA /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		6DA4B9A62C1A3FA900ADFAFA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6DC131D82C1441A200B7F2FE /* TabletxNasa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabletxNasa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DC131DB2C1441A200B7F2FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6DC131DD2C1441A200B7F2FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -54,8 +56,8 @@
 		6DC1320C2C14421B00B7F2FE /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		6DC132122C1442A400B7F2FE /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		6DC132142C14466200B7F2FE /* NasaImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasaImageViewModel.swift; sourceTree = "<group>"; };
-		6DC132162C1446D200B7F2FE /* NasaImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasaImageCell.swift; sourceTree = "<group>"; };
-		6DC132182C1446FC00B7F2FE /* NasaImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasaImageDetailViewController.swift; sourceTree = "<group>"; };
+		6DC132162C1446D200B7F2FE /* NASAImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASAImageCell.swift; sourceTree = "<group>"; };
+		6DC132182C1446FC00B7F2FE /* NASAImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASAImageDetailViewController.swift; sourceTree = "<group>"; };
 		6DC1321C2C146CCE00B7F2FE /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		6DC1321E2C146FCE00B7F2FE /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		6DC132222C14AE8900B7F2FE /* RocketAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketAnimationView.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 		6DC131CF2C1441A200B7F2FE = {
 			isa = PBXGroup;
 			children = (
+				6DA4B9A62C1A3FA900ADFAFA /* README.md */,
 				6DC131DA2C1441A200B7F2FE /* TabletxNasa */,
 				6DC131F12C1441A600B7F2FE /* TabletxNasaTests */,
 				6DC131D92C1441A200B7F2FE /* Products */,
@@ -154,8 +157,8 @@
 			isa = PBXGroup;
 			children = (
 				6DC131DF2C1441A200B7F2FE /* NASAImageListViewController.swift */,
-				6DC132182C1446FC00B7F2FE /* NasaImageDetailViewController.swift */,
-				6DC132162C1446D200B7F2FE /* NasaImageCell.swift */,
+				6DC132182C1446FC00B7F2FE /* NASAImageDetailViewController.swift */,
+				6DC132162C1446D200B7F2FE /* NASAImageCell.swift */,
 				6D4B77322C15D82E008BFF65 /* YearRangePickerView.swift */,
 				6DC132222C14AE8900B7F2FE /* RocketAnimationView.swift */,
 			);
@@ -260,6 +263,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DA4B9A72C1A3FA900ADFAFA /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,11 +280,11 @@
 				6DC131E02C1441A200B7F2FE /* NASAImageListViewController.swift in Sources */,
 				6DC1321F2C146FCE00B7F2FE /* APIError.swift in Sources */,
 				6DC1321D2C146CCE00B7F2FE /* ImageCache.swift in Sources */,
-				6DC132172C1446D200B7F2FE /* NasaImageCell.swift in Sources */,
+				6DC132172C1446D200B7F2FE /* NASAImageCell.swift in Sources */,
 				6DC131DC2C1441A200B7F2FE /* AppDelegate.swift in Sources */,
 				6DC131DE2C1441A200B7F2FE /* SceneDelegate.swift in Sources */,
 				6D4B77332C15D82E008BFF65 /* YearRangePickerView.swift in Sources */,
-				6DC132192C1446FC00B7F2FE /* NasaImageDetailViewController.swift in Sources */,
+				6DC132192C1446FC00B7F2FE /* NASAImageDetailViewController.swift in Sources */,
 				6DC1320D2C14421B00B7F2FE /* Models.swift in Sources */,
 				6DC132232C14AE8900B7F2FE /* RocketAnimationView.swift in Sources */,
 			);
