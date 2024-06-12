@@ -19,7 +19,7 @@ protocol NASAImageViewModelProtocol {
     func searchImages(query: String, startYear: Int, endYear: Int) async
     func loadMoreImages(startYear: Int, endYear: Int) async
     func image(at index: Int) -> NASAImage
-    func loadImage(for url: URL, forKey key: String, completion: @escaping @Sendable (UIImage?) -> Void) async
+    func loadImage(for url: URL, forKey key: String, completion: @escaping @Sendable (Result<UIImage, Error>) -> Void) async
 }
 
 class NASAImageViewModel: NASAImageViewModelProtocol {
@@ -61,12 +61,12 @@ class NASAImageViewModel: NASAImageViewModelProtocol {
         currentPage = 1
         images.removeAll()
         
-        do {
-            print("Fetching images for query: \(query), startYear: \(startYear), endYear: \(endYear)")
-            let fetchedImages = try await fetchImages(query: query, page: currentPage, startYear: startYear, endYear: endYear)
+        let result = await networkService.fetchImages(searchQuery: query, page: currentPage, startYear: startYear, endYear: endYear)
+        
+        switch result {
+        case .success(let fetchedImages):
             updateImages(fetchedImages)
-            print("Fetched images: \(fetchedImages.count)")
-        } catch {
+        case .failure(let error):
             handleFetchError(error)
         }
         
@@ -78,20 +78,16 @@ class NASAImageViewModel: NASAImageViewModelProtocol {
         isFetching = true
         currentPage += 1
         
-        do {
-            print("Loading more images for query: \(currentQuery), startYear: \(startYear), endYear: \(endYear)")
-            let fetchedImages = try await fetchImages(query: currentQuery, page: currentPage, startYear: startYear, endYear: endYear)
+        let result = await networkService.fetchImages(searchQuery: currentQuery, page: currentPage, startYear: startYear, endYear: endYear)
+        
+        switch result {
+        case .success(let fetchedImages):
             updateImages(fetchedImages)
-            print("Fetched more images: \(fetchedImages.count)")
-        } catch {
+        case .failure(let error):
             handleFetchError(error)
         }
         
         isFetching = false
-    }
-    
-    private func fetchImages(query: String, page: Int, startYear: Int, endYear: Int) async throws -> [NASAImage] {
-        return try await networkService.fetchImages(searchQuery: query, page: page, startYear: startYear, endYear: endYear)
     }
     
     private func updateImages(_ fetchedImages: [NASAImage]) {
@@ -113,33 +109,33 @@ class NASAImageViewModel: NASAImageViewModelProtocol {
         return filteredImages.count
     }
     
-    func loadImage(for url: URL, forKey key: String, completion: @escaping @Sendable (UIImage?) -> Void) async {
+    func loadImage(for url: URL, forKey key: String, completion: @escaping @Sendable (Result<UIImage, Error>) -> Void) async {
         if let cachedImage = await imageCache.getImage(forKey: key) {
             DispatchQueue.main.async {
-                completion(cachedImage)
+                completion(.success(cachedImage))
             }
         } else {
             await downloadAndCacheImage(for: url, with: key, completion: completion)
         }
     }
     
-    private func downloadAndCacheImage(for url: URL, with key: String, completion: @escaping @Sendable (UIImage?) -> Void) async {
+    private func downloadAndCacheImage(for url: URL, with key: String, completion: @escaping @Sendable (Result<UIImage, Error>) -> Void) async {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             if let downloadedImage = UIImage(data: data) {
                 await imageCache.setImage(downloadedImage, forKey: key)
                 DispatchQueue.main.async {
-                    completion(downloadedImage)
+                    completion(.success(downloadedImage))
                 }
             } else {
                 DispatchQueue.main.async {
-                    completion(nil)
+                    completion(.failure(APIError.decodingFailed))
                 }
             }
         } catch {
             print("Failed to load image: \(error)")
             DispatchQueue.main.async {
-                completion(nil)
+                completion(.failure(error))
             }
         }
     }

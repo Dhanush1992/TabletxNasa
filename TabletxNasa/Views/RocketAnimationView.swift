@@ -20,6 +20,11 @@ class RocketAnimationView: UIView {
         setupView()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // Additional layout adjustments if needed
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

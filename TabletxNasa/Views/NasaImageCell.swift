@@ -17,6 +17,7 @@ class NASAImageCell: UICollectionViewCell {
         super.init(frame: frame)
         setupViews()
         setupConstraints()
+        configureRoundedCorners()
     }
     
     required init?(coder: NSCoder) {
@@ -49,6 +50,13 @@ class NASAImageCell: UICollectionViewCell {
         ])
     }
     
+    private func configureRoundedCorners() {
+        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
+        contentView.layer.borderColor = UIColor.lightGray.cgColor
+        contentView.layer.borderWidth = 1.0
+    }
+    
     func configure(with image: NASAImage, showTitle: Bool) {
         imageView.image = nil // Placeholder image or color can be set here
         titleLabel.text = showTitle ? image.title : ""
@@ -66,3 +74,4 @@ extension NSLayoutConstraint {
         return self
     }
 }
+

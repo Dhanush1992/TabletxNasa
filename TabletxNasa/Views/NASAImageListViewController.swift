@@ -8,14 +8,15 @@
 import UIKit
 import Combine
 
-class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate {
+class NASAImageListViewController: UIViewController {
+    // MARK: - Properties
+    
     private var viewModel: NASAImageViewModelProtocol
     private var collectionView: UICollectionView
     private var searchBar: UISearchBar
     private var dataSource: UICollectionViewDiffableDataSource<Section, NASAImage>
     private let refreshControl = UIRefreshControl()
     private let rocketAnimationView = RocketAnimationView(frame: CGRect(x: 0, y: 0, width: 50, height: 100))
-    private let blurView = SemiCircularBlurView(effect: UIBlurEffect(style: .light))
     private var currentQuery: String = ""
     private var cancellables = Set<AnyCancellable>()
     private var yearRangePickerView: YearRangePickerView
@@ -24,6 +25,7 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
     private var itemsPerRowLabel: UILabel
     private var filterButton: UIBarButtonItem
     private var loadMoreButton: UIButton
+    private var progressView: ProgressView?
     
     private var isSearchBarPinnedToTop = false
     private var searchBarTopConstraint: NSLayoutConstraint!
@@ -43,6 +45,8 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
     enum Section {
         case main
     }
+    
+    // MARK: - Initialization
     
     init(viewModel: NASAImageViewModelProtocol = NASAImageViewModel()) {
         self.viewModel = viewModel
@@ -65,6 +69,8 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -78,6 +84,8 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
         setupLoadMoreButton()
         bindViewModel()
     }
+    
+    // MARK: - UI Setup Methods
     
     private func setupNavigationBar() {
         navigationItem.title = "NASA Images"
@@ -108,6 +116,10 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
         ])
         
         activateSearchBarConstraints(pinToTop: false)
+        configureSearchBarAppearance()
+    }
+    
+    private func configureSearchBarAppearance() {
         if let textField = searchBar.value(forKey: "searchField") as? UITextField {
             textField.font = UIFont.systemFont(ofSize: 20)
             textField.layer.cornerRadius = 30
@@ -186,6 +198,7 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
         collectionView.showsVerticalScrollIndicator = true
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -3)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
         view.addSubview(collectionView)
         
         collectionViewTopConstraint = collectionView.topAnchor.constraint(equalTo: yearRangePickerView.isHidden ? searchBar.bottomAnchor : itemsPerRowSlider.bottomAnchor, constant: 16)
@@ -211,9 +224,16 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
             // Load image asynchronously
             Task {
                 if let url = URL(string: image.url) {
-                    await self.viewModel.loadImage(for: url, forKey: image.url) { loadedImage in
-                        DispatchQueue.main.async {
-                            cell.updateImage(loadedImage ?? UIImage(systemName: "photo")!)
+                    await self.viewModel.loadImage(for: url, forKey: image.url) { result in
+                        switch result {
+                        case .success(let loadedImage):
+                            DispatchQueue.main.async {
+                                cell.updateImage(loadedImage)
+                            }
+                        case .failure:
+                            DispatchQueue.main.async {
+                                cell.updateImage(UIImage(systemName: "photo")!)
+                            }
                         }
                     }
                 }
@@ -232,6 +252,12 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
             }
         }
         
+        viewModel.shouldShowDefaultView = { [weak self] shouldShow in
+            DispatchQueue.main.async {
+                self?.progressView?.isHidden = shouldShow
+            }
+        }
+        
         // Combine observers
         guard let viewModel = viewModel as? NASAImageViewModel else { return }
         let imagesPublisher = viewModel.$filteredImages
@@ -246,20 +272,13 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
     private func setupRefreshControl() {
         refreshControl.tintColor = .clear // Hide the default spinner
         
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        refreshControl.addSubview(blurView)
-        
         rocketAnimationView.translatesAutoresizingMaskIntoConstraints = false
         refreshControl.addSubview(rocketAnimationView)
         
+        // Update constraints for the rocket animation view
         NSLayoutConstraint.activate([
-            blurView.leadingAnchor.constraint(equalTo: refreshControl.leadingAnchor),
-            blurView.trailingAnchor.constraint(equalTo: refreshControl.trailingAnchor),
-            blurView.topAnchor.constraint(equalTo: refreshControl.topAnchor),
-            blurView.bottomAnchor.constraint(equalTo: refreshControl.bottomAnchor),
-            
             rocketAnimationView.centerXAnchor.constraint(equalTo: refreshControl.centerXAnchor),
-            rocketAnimationView.centerYAnchor.constraint(equalTo: refreshControl.centerYAnchor),
+            rocketAnimationView.centerYAnchor.constraint(equalTo: refreshControl.centerYAnchor, constant: 50), // Adjust constant if needed
             rocketAnimationView.widthAnchor.constraint(equalToConstant: 50),
             rocketAnimationView.heightAnchor.constraint(equalToConstant: 100)
         ])
@@ -290,30 +309,68 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
         ])
     }
     
+    // MARK: - Action Methods
+    
     @objc private func refreshData() {
+        progressView?.startAnimating()
         Task {
-            UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) {
-                self.blurView.alpha = 1.0
-            }.startAnimation()
-            
             rocketAnimationView.resetAnimation() // Reset animation before starting a new one
             await viewModel.searchImages(query: currentQuery, startYear: startYear, endYear: endYear)
             refreshControl.endRefreshing()
             rocketAnimationView.startAnimation()
-            
-            UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) {
-                self.blurView.alpha = 0.0
-            }.startAnimation()
-            
             loadMoreButton.isHidden = true // Ensure Load More button is hidden at the start
+            progressView?.stopAnimating()
         }
     }
     
     @objc private func loadMoreImages() {
         Task {
+            progressView?.startAnimating()
             await viewModel.loadMoreImages(startYear: startYear, endYear: endYear)
             loadMoreButton.isHidden = true
+            progressView?.stopAnimating()
         }
+    }
+    
+    @objc private func itemsPerRowSliderChanged(_ sender: UISlider) {
+        itemsPerRow = Int(sender.value)
+        itemsPerRowLabel.text = "Items per row: \(itemsPerRow)"
+        let layout = UICollectionViewFlowLayout()
+        configureCollectionViewLayout(layout: layout)
+        collectionView.setCollectionViewLayout(layout, animated: false)
+        filterButton.tintColor = .orange // Highlight the filter button when visible
+        updateCollectionView()
+        UserDefaults.standard.set(itemsPerRow, forKey: "itemsPerRow")
+    }
+    
+    @objc private func toggleFilterAndSettings() {
+        let isHidden = !yearRangePickerView.isHidden
+        yearRangePickerView.isHidden = isHidden
+        yearLabel.isHidden = isHidden
+        itemsPerRowLabel.isHidden = isHidden
+        itemsPerRowSlider.isHidden = isHidden
+        
+        if isHidden {
+            collectionViewTopConstraint.constant = 16 // Adjust collection view top constraint
+        } else {
+            collectionViewTopConstraint.constant = yearLabel.frame.height + yearRangePickerView.frame.height + itemsPerRowLabel.frame.height + itemsPerRowSlider.frame.height + 64 // Adjust collection view top constraint
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    // MARK: - Helper Methods
+    
+    private func configureCollectionViewLayout(layout: UICollectionViewFlowLayout) {
+        let spacing: CGFloat = 8
+        let totalSpacing = spacing * CGFloat(itemsPerRow + 1)
+        let itemWidth = (view.frame.width - totalSpacing) / CGFloat(itemsPerRow)
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth + (itemsPerRow > 2 ? 0 : 40)) // Adjust height as needed
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        layout.minimumInteritemSpacing = spacing
+        layout.minimumLineSpacing = spacing
     }
     
     private func updateCollectionView() {
@@ -341,55 +398,6 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
         }
     }
     
-    @objc private func itemsPerRowSliderChanged(_ sender: UISlider) {
-        itemsPerRow = Int(sender.value)
-        itemsPerRowLabel.text = "Items per row: \(itemsPerRow)"
-        let layout = UICollectionViewFlowLayout()
-        configureCollectionViewLayout(layout: layout)
-        collectionView.setCollectionViewLayout(layout, animated: false)
-        updateCollectionView()
-        UserDefaults.standard.set(itemsPerRow, forKey: "itemsPerRow")
-    }
-    
-    private func configureCollectionViewLayout(layout: UICollectionViewFlowLayout) {
-        let spacing: CGFloat = 8
-        let totalSpacing = spacing * CGFloat(itemsPerRow + 1)
-        let itemWidth = (view.frame.width - totalSpacing) / CGFloat(itemsPerRow)
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth + (itemsPerRow > 2 ? 0 : 40)) // Adjust height as needed
-        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-        layout.minimumInteritemSpacing = spacing
-        layout.minimumLineSpacing = spacing
-    }
-    
-    func didSelectYearRange(startYear: Int, endYear: Int) {
-        self.startYear = startYear
-        self.endYear = endYear
-        filterButton.tintColor = .black // Highlight the filter button when values are selected
-        Task {
-            await viewModel.searchImages(query: currentQuery, startYear: startYear, endYear: endYear)
-        }
-    }
-    
-    @objc private func toggleFilterAndSettings() {
-        let isHidden = !yearRangePickerView.isHidden
-        yearRangePickerView.isHidden = isHidden
-        yearLabel.isHidden = isHidden
-        itemsPerRowLabel.isHidden = isHidden
-        itemsPerRowSlider.isHidden = isHidden
-        
-        if isHidden {
-            filterButton.tintColor = .none // Reset the filter button tint when hidden
-            collectionViewTopConstraint.constant = 16 // Adjust collection view top constraint
-        } else {
-            filterButton.tintColor = .black // Highlight the filter button when visible
-            collectionViewTopConstraint.constant = yearLabel.frame.height + yearRangePickerView.frame.height + itemsPerRowLabel.frame.height + itemsPerRowSlider.frame.height + 64 // Adjust collection view top constraint
-        }
-        
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
     private func showErrorAlert(error: Error) {
         let message: String
         switch error {
@@ -400,20 +408,9 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
         case APIError.decodingFailed:
             message = "Failed to decode the server response. Please try again."
         case APIError.statusCode(let statusCode):
-            switch statusCode {
-            case 400:
-                message = "Bad request. Please check your input."
-            case 401:
-                message = "Unauthorized. Please check your credentials."
-            case 403:
-                message = "Forbidden. You don't have permission to access this resource."
-            case 404:
-                message = "Not found. The requested resource could not be found."
-            case 500:
-                message = "Server error. Please try again later."
-            default:
-                message = "An unexpected error occurred. Please try again."
-            }
+            message = statusMessage(for: statusCode)
+        case is URLError where (error as? URLError)?.code == .timedOut:
+            message = "The request timed out. Please check your internet connection and try again."
         default:
             message = "An unexpected error occurred. Please try again."
         }
@@ -422,7 +419,39 @@ class NASAImageListViewController: UIViewController, YearRangePickerViewDelegate
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         present(alertController, animated: true)
     }
+    
+    private func statusMessage(for statusCode: Int) -> String {
+        switch statusCode {
+        case 400:
+            return "Bad request. Please check your input."
+        case 401:
+            return "Unauthorized. Please check your credentials."
+        case 403:
+            return "Forbidden. You don't have permission to access this resource."
+        case 404:
+            return "Not found. The requested resource could not be found."
+        case 500:
+            return "Server error. Please try again later."
+        default:
+            return "An unexpected error occurred. Please try again."
+        }
+    }
 }
+
+// MARK: - YearRangePickerViewDelegate
+
+extension NASAImageListViewController: YearRangePickerViewDelegate {
+    func didSelectYearRange(startYear: Int, endYear: Int) {
+        self.startYear = startYear
+        self.endYear = endYear
+        filterButton.tintColor = .orange // Highlight the filter button when visible
+        Task {
+            await viewModel.searchImages(query: currentQuery, startYear: startYear, endYear: endYear)
+        }
+    }
+}
+
+// MARK: - UISearchBarDelegate
 
 extension NASAImageListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -439,6 +468,8 @@ extension NASAImageListViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension NASAImageListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailVC = NASAImageDetailViewController()
@@ -452,7 +483,7 @@ extension NASAImageListViewController: UICollectionViewDelegate {
         let frameHeight = scrollView.frame.size.height
         
         if contentOffsetY > contentHeight - frameHeight * 1.5 {
-            if searchBar.text != "" {
+            if !currentQuery.isEmpty {
                 loadMoreButton.isHidden = false
             }
         } else {
