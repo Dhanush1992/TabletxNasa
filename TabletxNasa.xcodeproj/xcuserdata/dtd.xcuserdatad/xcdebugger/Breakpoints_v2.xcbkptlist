@@ -52,13 +52,13 @@
             filePath = "TabletxNasa/Views/NASAImageListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
             landmarkName = "bindViewModel()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "24A148A1-4ABB-4C30-B9A2-E7F4848B555A - e544a364036102fe"
+                  uuid = "24A148A1-4ABB-4C30-B9A2-E7F4848B555A - e544a3640361031f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -68,42 +68,12 @@
                   urlString = "file:///Users/dtd/iOSKata/TabletxNasa/TabletxNasa/Views/NASAImageListViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "263"
-                  endingLineNumber = "263"
-                  offsetFromSymbolStart = "328">
+                  startingLineNumber = "262"
+                  endingLineNumber = "262"
+                  offsetFromSymbolStart = "80">
                </Location>
                <Location
-                  uuid = "24A148A1-4ABB-4C30-B9A2-E7F4848B555A - 480347ba17890dd3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TabletxNasa.NASAImageListViewController.bindViewModel() -&gt; ()"
-                  moduleName = "TabletxNasa"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dtd/iOSKata/TabletxNasa/TabletxNasa/Views/NASAImageListViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "266"
-                  endingLineNumber = "266"
-                  offsetFromSymbolStart = "960">
-               </Location>
-               <Location
-                  uuid = "24A148A1-4ABB-4C30-B9A2-E7F4848B555A - dc04b06116a208b2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #3 (Swift.Bool) -&gt; () in TabletxNasa.NASAImageListViewController.bindViewModel() -&gt; ()"
-                  moduleName = "TabletxNasa"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dtd/iOSKata/TabletxNasa/TabletxNasa/Views/NASAImageListViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "266"
-                  endingLineNumber = "266"
-                  offsetFromSymbolStart = "220">
-               </Location>
-               <Location
-                  uuid = "24A148A1-4ABB-4C30-B9A2-E7F4848B555A - e544a364036102fe"
+                  uuid = "24A148A1-4ABB-4C30-B9A2-E7F4848B555A - e544a3640361031f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -113,8 +83,8 @@
                   urlString = "file:///Users/dtd/iOSKata/TabletxNasa/TabletxNasa/Views/NASAImageListViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "263"
-                  endingLineNumber = "263"
+                  startingLineNumber = "262"
+                  endingLineNumber = "262"
                   offsetFromSymbolStart = "216">
                </Location>
             </Locations>

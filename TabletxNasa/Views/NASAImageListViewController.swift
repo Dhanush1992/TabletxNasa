@@ -40,10 +40,7 @@ class NASAImageListViewController: UIViewController {
     private var startYear: Int
     private var endYear: Int
     private var itemsPerRow = UserDefaults.standard.integer(forKey: "itemsPerRow") == 0 ? 2 : UserDefaults.standard.integer(forKey: "itemsPerRow")
-    
-    private var cellsLoaded = 0
-    private var totalCells = Int.max
-    
+        
     enum Section {
         case main
     }
@@ -254,7 +251,9 @@ class NASAImageListViewController: UIViewController {
     private func bindViewModel() {
         viewModel.onImagesUpdated = { [weak self] in
             DispatchQueue.main.async {
-                self?.updateCollectionView()
+                self?.updateCollectionView {
+                    self?.checkIfAllCellsAreLoaded()
+                }
             }
         }
         viewModel.onFetchError = { [weak self] error in
@@ -381,20 +380,27 @@ class NASAImageListViewController: UIViewController {
         layout.minimumLineSpacing = spacing
     }
     
-    private func updateCollectionView() {
+    private func updateCollectionView(completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
             var snapshot = NSDiffableDataSourceSnapshot<Section, NASAImage>()
             snapshot.appendSections([.main])
             snapshot.appendItems(self.viewModel.filteredImages)
-            self.totalCells = self.viewModel.filteredImages.count
-            self.cellsLoaded = 0
             self.collectionView.performBatchUpdates({
                 self.dataSource.apply(snapshot, animatingDifferences: true)
             }, completion: { _ in
-                if self.totalCells > 0 && self.cellsLoaded == self.totalCells {
-                    self.stopSearchBarBorderAnimation()
-                }
+                completion?()
             })
+        }
+    }
+    
+    private func checkIfAllCellsAreLoaded() {
+        let visibleIndexPaths = collectionView.indexPathsForVisibleItems
+        let allVisibleCells = visibleIndexPaths.allSatisfy { indexPath in
+            collectionView.cellForItem(at: indexPath) != nil
+        }
+
+        if allVisibleCells && visibleIndexPaths.count == viewModel.filteredImages.count, viewModel.filteredImages.count > 0 {
+            stopSearchBarBorderAnimation()
         }
     }
     
@@ -517,15 +523,6 @@ extension NASAImageListViewController: UICollectionViewDelegate {
         navigationController?.pushViewController(detailVC, animated: true)
     }
 
-    private func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = dataSource.collectionView(collectionView, cellForItemAt: indexPath) as! NASAImageCell
-        cellsLoaded += 1
-        if cellsLoaded == totalCells {
-            stopSearchBarBorderAnimation()
-        }
-        return cell
-    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
