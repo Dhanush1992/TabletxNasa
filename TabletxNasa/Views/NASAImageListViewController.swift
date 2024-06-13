@@ -265,7 +265,6 @@ class NASAImageListViewController: UIViewController {
         viewModel.shouldShowDefaultView = { [weak self] shouldShow in
             DispatchQueue.main.async {
                 self?.collectionView.isHidden = shouldShow
-                self?.stopSearchBarBorderAnimation()
             }
         }
         
@@ -408,7 +407,7 @@ class NASAImageListViewController: UIViewController {
     private func startSearchBarBorderAnimation() {
         DispatchQueue.main.async {
             let colorAnimation = CABasicAnimation(keyPath: "borderColor")
-            colorAnimation.fromValue = UIColor.clear.cgColor
+            colorAnimation.fromValue = UIColor.yellow.cgColor
             colorAnimation.toValue = UIColor.orange.cgColor
             colorAnimation.duration = 0.5
             colorAnimation.autoreverses = true
@@ -420,7 +419,7 @@ class NASAImageListViewController: UIViewController {
     private func stopSearchBarBorderAnimation() {
         DispatchQueue.main.async {
             self.searchBar.layer.removeAnimation(forKey: "borderColorAnimation")
-            self.searchBar.layer.borderColor = UIColor.clear.cgColor
+            self.searchBar.layer.borderColor = UIColor.green.cgColor
         }
     }
     

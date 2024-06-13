@@ -115,27 +115,23 @@ class NASAImageViewModel: NASAImageViewModelProtocol {
                 completion(.success(cachedImage))
             }
         } else {
-            await downloadAndCacheImage(for: url, with: key, completion: completion)
-        }
-    }
-    
-    private func downloadAndCacheImage(for url: URL, with key: String, completion: @escaping @Sendable (Result<UIImage, Error>) -> Void) async {
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            if let downloadedImage = UIImage(data: data) {
-                await imageCache.setImage(downloadedImage, forKey: key)
-                DispatchQueue.main.async {
-                    completion(.success(downloadedImage))
+            let result = await networkService.fetchImageData(from: url)
+            switch result {
+            case .success(let data):
+                if let downloadedImage = UIImage(data: data) {
+                    await imageCache.setImage(downloadedImage, forKey: key)
+                    DispatchQueue.main.async {
+                        completion(.success(downloadedImage))
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        completion(.failure(APIError.decodingFailed))
+                    }
                 }
-            } else {
+            case .failure(let error):
                 DispatchQueue.main.async {
-                    completion(.failure(APIError.decodingFailed))
+                    completion(.failure(error))
                 }
-            }
-        } catch {
-            print("Failed to load image: \(error)")
-            DispatchQueue.main.async {
-                completion(.failure(error))
             }
         }
     }
