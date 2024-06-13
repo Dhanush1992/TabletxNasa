@@ -41,6 +41,9 @@ class NASAImageListViewController: UIViewController {
     private var endYear: Int
     private var itemsPerRow = UserDefaults.standard.integer(forKey: "itemsPerRow") == 0 ? 2 : UserDefaults.standard.integer(forKey: "itemsPerRow")
     
+    private var cellsLoaded = 0
+    private var totalCells = Int.max
+    
     enum Section {
         case main
     }
@@ -252,7 +255,6 @@ class NASAImageListViewController: UIViewController {
         viewModel.onImagesUpdated = { [weak self] in
             DispatchQueue.main.async {
                 self?.updateCollectionView()
-                self?.stopSearchBarBorderAnimation()
             }
         }
         viewModel.onFetchError = { [weak self] error in
@@ -384,7 +386,15 @@ class NASAImageListViewController: UIViewController {
             var snapshot = NSDiffableDataSourceSnapshot<Section, NASAImage>()
             snapshot.appendSections([.main])
             snapshot.appendItems(self.viewModel.filteredImages)
-            self.dataSource.apply(snapshot, animatingDifferences: true)
+            self.totalCells = self.viewModel.filteredImages.count
+            self.cellsLoaded = 0
+            self.collectionView.performBatchUpdates({
+                self.dataSource.apply(snapshot, animatingDifferences: true)
+            }, completion: { _ in
+                if self.totalCells > 0 && self.cellsLoaded == self.totalCells {
+                    self.stopSearchBarBorderAnimation()
+                }
+            })
         }
     }
     
@@ -505,6 +515,15 @@ extension NASAImageListViewController: UICollectionViewDelegate {
         let detailVC = NASAImageDetailViewController()
         detailVC.viewModel = NASAImageDetailViewModel(image: viewModel.image(at: indexPath.item))
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+
+    private func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = dataSource.collectionView(collectionView, cellForItemAt: indexPath) as! NASAImageCell
+        cellsLoaded += 1
+        if cellsLoaded == totalCells {
+            stopSearchBarBorderAnimation()
+        }
+        return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
