@@ -56,6 +56,38 @@
             endingLineNumber = "261"
             landmarkName = "bindViewModel()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "24A148A1-4ABB-4C30-B9A2-E7F4848B555A - e544a3640361033c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor @Sendable () -&gt; () in closure #2 (Swift.Error) -&gt; () in TabletxNasa.NASAImageListViewController.bindViewModel() -&gt; ()"
+                  moduleName = "TabletxNasa"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dtd/iOSKata/TabletxNasa/TabletxNasa/Views/NASAImageListViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "261"
+                  endingLineNumber = "261"
+                  offsetFromSymbolStart = "216">
+               </Location>
+               <Location
+                  uuid = "24A148A1-4ABB-4C30-B9A2-E7F4848B555A - e544a3640361033c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor @Sendable () -&gt; () in closure #2 (Swift.Error) -&gt; () in TabletxNasa.NASAImageListViewController.bindViewModel() -&gt; ()"
+                  moduleName = "TabletxNasa"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dtd/iOSKata/TabletxNasa/TabletxNasa/Views/NASAImageListViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "261"
+                  endingLineNumber = "261"
+                  offsetFromSymbolStart = "215">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

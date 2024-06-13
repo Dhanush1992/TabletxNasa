@@ -479,6 +479,10 @@ extension NASAImageListViewController: YearRangePickerViewDelegate {
 // MARK: - UISearchBarDelegate
 
 extension NASAImageListViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.layer.borderColor = UIColor.clear.cgColor
+    }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let query = searchBar.text else { return }
         currentQuery = query // Store the current query
