@@ -21,7 +21,7 @@ class NASAImageDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         setupScrollView()
         setupContentView()
         setupImageView()
@@ -68,6 +68,7 @@ class NASAImageDetailViewController: UIViewController {
     private func setupTitleLabel() {
         titleLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         titleLabel.numberOfLines = 0
+        titleLabel.textColor = .label
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
     }
@@ -76,12 +77,15 @@ class NASAImageDetailViewController: UIViewController {
         descriptionTextView.font = UIFont.preferredFont(forTextStyle: .body)
         descriptionTextView.isEditable = false
         descriptionTextView.isScrollEnabled = false
+        descriptionTextView.textColor = .label
+        descriptionTextView.backgroundColor = .clear
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(descriptionTextView)
     }
     
     private func setupPhotographerLabel() {
         photographerLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+        photographerLabel.textColor = .label
         photographerLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(photographerLabel)
     }
@@ -89,6 +93,7 @@ class NASAImageDetailViewController: UIViewController {
     private func setupLocationLabel() {
         locationLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         locationLabel.numberOfLines = 0
+        locationLabel.textColor = .label
         locationLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(locationLabel)
     }

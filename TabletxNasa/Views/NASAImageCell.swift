@@ -45,11 +45,11 @@ class NASAImageCell: UICollectionViewCell {
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
-
+            
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4)
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4).with(priority: .defaultHigh)
         ])
     }
     
@@ -77,4 +77,3 @@ extension NSLayoutConstraint {
         return self
     }
 }
-

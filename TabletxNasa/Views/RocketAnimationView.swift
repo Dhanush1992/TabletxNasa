@@ -10,7 +10,7 @@ import UIKit
 
 class RocketAnimationView: UIView {
     private let rocketImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "space")) // Ensure you have a rocket image in your assets
+        let imageView = UIImageView(image: UIImage(named: "space"))
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -18,11 +18,6 @@ class RocketAnimationView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        // Additional layout adjustments if needed
     }
     
     required init?(coder: NSCoder) {

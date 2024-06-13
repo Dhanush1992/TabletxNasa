@@ -1,11 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "space.png",
+      "filename" : "icons8-rocket-50.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "icons8-rocket-100.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

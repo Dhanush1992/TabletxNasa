@@ -72,7 +72,7 @@ class NASAImageListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         setupNavigationBar()
         setupSearchBar()
         setupYearRangePickerView()
@@ -89,19 +89,21 @@ class NASAImageListViewController: UIViewController {
     private func setupNavigationBar() {
         navigationItem.title = "NASA Images"
         filterButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3.decrease.circle"), style: .plain, target: self, action: #selector(toggleFilterAndSettings))
-        filterButton.tintColor = .black
+        filterButton.tintColor = .label
         navigationItem.rightBarButtonItem = filterButton
         
         if let navigationBar = navigationController?.navigationBar {
-            navigationBar.tintColor = .black
-            navigationBar.barTintColor = .white
-            navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navigationBar.tintColor = .label
+            navigationBar.barTintColor = .systemBackground
+            navigationBar.titleTextAttributes = [.foregroundColor: UIColor.label]
         }
     }
     
     private func setupSearchBar() {
         searchBar.delegate = self
         searchBar.placeholder = "NASA Images"
+        searchBar.searchTextField.backgroundColor = .systemGray6
+        searchBar.searchTextField.textColor = .label
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchBar)
         
@@ -123,9 +125,12 @@ class NASAImageListViewController: UIViewController {
             textField.font = UIFont.systemFont(ofSize: 20)
             textField.layer.cornerRadius = 30
             textField.layer.masksToBounds = true
+            textField.backgroundColor = .systemGray6
         }
         searchBar.layer.cornerRadius = 30
         searchBar.layer.masksToBounds = true
+        searchBar.layer.borderWidth = 2
+        searchBar.layer.borderColor = UIColor.clear.cgColor
     }
     
     private func activateSearchBarConstraints(pinToTop: Bool) {
@@ -141,6 +146,7 @@ class NASAImageListViewController: UIViewController {
         
         yearLabel.translatesAutoresizingMaskIntoConstraints = false
         yearLabel.text = "Between Years"
+        yearLabel.textColor = .label
         view.addSubview(yearLabel)
         
         yearRangePickerHeightConstraint = yearRangePickerView.heightAnchor.constraint(equalToConstant: 100)
@@ -163,12 +169,13 @@ class NASAImageListViewController: UIViewController {
     
     private func setupSlider() {
         itemsPerRowLabel.text = "Items per row: \(itemsPerRow)"
+        itemsPerRowLabel.textColor = .label
         itemsPerRowLabel.translatesAutoresizingMaskIntoConstraints = false
         
         itemsPerRowSlider.minimumValue = 1
         itemsPerRowSlider.maximumValue = 5
         itemsPerRowSlider.value = Float(itemsPerRow)
-        itemsPerRowSlider.tintColor = .black
+        itemsPerRowSlider.tintColor = .label
         itemsPerRowSlider.addTarget(self, action: #selector(itemsPerRowSliderChanged(_:)), for: .valueChanged)
         itemsPerRowSlider.translatesAutoresizingMaskIntoConstraints = false
         
@@ -197,7 +204,7 @@ class NASAImageListViewController: UIViewController {
         collectionView.showsVerticalScrollIndicator = true
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -3)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+        collectionView.backgroundColor = .systemBackground
         view.addSubview(collectionView)
         
         collectionViewTopConstraint = collectionView.topAnchor.constraint(equalTo: yearRangePickerView.isHidden ? searchBar.bottomAnchor : itemsPerRowSlider.bottomAnchor, constant: 16)
@@ -243,17 +250,22 @@ class NASAImageListViewController: UIViewController {
     
     private func bindViewModel() {
         viewModel.onImagesUpdated = { [weak self] in
-            self?.updateCollectionView()
+            DispatchQueue.main.async {
+                self?.updateCollectionView()
+                self?.stopSearchBarBorderAnimation()
+            }
         }
         viewModel.onFetchError = { [weak self] error in
             DispatchQueue.main.async {
                 self?.showErrorAlert(error: error)
+                self?.stopSearchBarBorderAnimation()
             }
         }
         
         viewModel.shouldShowDefaultView = { [weak self] shouldShow in
             DispatchQueue.main.async {
                 self?.collectionView.isHidden = shouldShow
+                self?.stopSearchBarBorderAnimation()
             }
         }
         
@@ -267,7 +279,7 @@ class NASAImageListViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
-    
+
     private func setupRefreshControl() {
         refreshControl.tintColor = .clear // Hide the default spinner
         
@@ -393,6 +405,25 @@ class NASAImageListViewController: UIViewController {
         }
     }
     
+    private func startSearchBarBorderAnimation() {
+        DispatchQueue.main.async {
+            let colorAnimation = CABasicAnimation(keyPath: "borderColor")
+            colorAnimation.fromValue = UIColor.clear.cgColor
+            colorAnimation.toValue = UIColor.orange.cgColor
+            colorAnimation.duration = 0.5
+            colorAnimation.autoreverses = true
+            colorAnimation.repeatCount = .infinity
+            self.searchBar.layer.add(colorAnimation, forKey: "borderColorAnimation")
+        }
+    }
+
+    private func stopSearchBarBorderAnimation() {
+        DispatchQueue.main.async {
+            self.searchBar.layer.removeAnimation(forKey: "borderColorAnimation")
+            self.searchBar.layer.borderColor = UIColor.clear.cgColor
+        }
+    }
+    
     private func showErrorAlert(error: Error) {
         let message: String
         switch error {
@@ -452,6 +483,7 @@ extension NASAImageListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let query = searchBar.text else { return }
         currentQuery = query // Store the current query
+        startSearchBarBorderAnimation()
         Task {
             if (!isSearchBarPinnedToTop) {
                 animateSearchBar(toTop: true)
@@ -486,3 +518,4 @@ extension NASAImageListViewController: UICollectionViewDelegate {
         }
     }
 }
+
