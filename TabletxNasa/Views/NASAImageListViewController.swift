@@ -40,6 +40,7 @@ class NASAImageListViewController: UIViewController {
     private var startYear: Int
     private var endYear: Int
     private var itemsPerRow = UserDefaults.standard.integer(forKey: "itemsPerRow") == 0 ? 2 : UserDefaults.standard.integer(forKey: "itemsPerRow")
+    private var loadedCellsCount = 0
         
     enum Section {
         case main
@@ -394,13 +395,8 @@ class NASAImageListViewController: UIViewController {
     }
     
     private func checkIfAllCellsAreLoaded() {
-        let visibleIndexPaths = collectionView.indexPathsForVisibleItems
-        let allVisibleCells = visibleIndexPaths.allSatisfy { indexPath in
-            collectionView.cellForItem(at: indexPath) != nil
-        }
-
-        if allVisibleCells && visibleIndexPaths.count == viewModel.filteredImages.count, viewModel.filteredImages.count > 0 {
-            stopSearchBarBorderAnimation()
+        if loadedCellsCount == viewModel.filteredImages.count, viewModel.filteredImages.count > 0 {
+            stopSearchBarBorderAnimation(color: UIColor.green.cgColor)
         }
     }
     
@@ -432,10 +428,10 @@ class NASAImageListViewController: UIViewController {
         }
     }
 
-    private func stopSearchBarBorderAnimation() {
+    private func stopSearchBarBorderAnimation(color: CGColor = UIColor.clear.cgColor) {
         DispatchQueue.main.async {
             self.searchBar.layer.removeAnimation(forKey: "borderColorAnimation")
-            self.searchBar.layer.borderColor = UIColor.green.cgColor
+            self.searchBar.layer.borderColor = color
         }
     }
     
@@ -496,7 +492,7 @@ extension NASAImageListViewController: YearRangePickerViewDelegate {
 
 extension NASAImageListViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.searchBar.layer.borderColor = UIColor.clear.cgColor
+        stopSearchBarBorderAnimation()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -521,6 +517,11 @@ extension NASAImageListViewController: UICollectionViewDelegate {
         let detailVC = NASAImageDetailViewController()
         detailVC.viewModel = NASAImageDetailViewModel(image: viewModel.image(at: indexPath.item))
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        loadedCellsCount += 1
+        checkIfAllCellsAreLoaded()
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
