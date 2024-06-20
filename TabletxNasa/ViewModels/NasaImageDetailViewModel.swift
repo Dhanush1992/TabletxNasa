@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol NASAImageDetailViewModelProtocol {
+protocol NASAImageDetailViewModelProtocol: Sendable {
     var title: String { get }
     var description: String { get }
     var photographer: String { get }
@@ -18,7 +18,8 @@ protocol NASAImageDetailViewModelProtocol {
     func loadImage(for url: URL, forKey key: String, completion: @escaping @Sendable (Result<UIImage, Error>) -> Void) async
 }
 
-class NASAImageDetailViewModel: NASAImageDetailViewModelProtocol {
+
+class NASAImageDetailViewModel: NASAImageDetailViewModelProtocol, @unchecked Sendable {
     private let image: NASAImage
     private let networkService: NetworkServiceProtocol
     private let imageCache: ImageCacheProtocol

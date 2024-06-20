@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol ImageCacheProtocol {
+protocol ImageCacheProtocol: Sendable {
     func setImage(_ image: UIImage, forKey key: String) async
     func getImage(forKey key: String) async -> UIImage?
 }
 
-class ImageCache: ImageCacheProtocol {
+actor ImageCache: ImageCacheProtocol {
     static let shared = ImageCache()
     
     private let cache = NSCache<NSString, CacheItem>()
@@ -43,7 +43,7 @@ class ImageCache: ImageCacheProtocol {
         }
     }
     
-    @objc private func didReceiveMemoryWarningNotification() {
+    @objc private func didReceiveMemoryWarningNotification() async {
         cache.removeAllObjects()
     }
     
@@ -61,4 +61,3 @@ private class CacheItem {
         self.expirationDate = expirationDate
     }
 }
-

@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import UIKit
 
-protocol NASAImageViewModelProtocol {
+protocol NASAImageViewModelProtocol: Sendable {
     var images: [NASAImage] { get }
     var filteredImages: [NASAImage] { get }
     var onImagesUpdated: (() -> Void)? { get set }
@@ -22,7 +22,7 @@ protocol NASAImageViewModelProtocol {
     func loadImage(for url: URL, forKey key: String, completion: @escaping @Sendable (Result<UIImage, Error>) -> Void) async
 }
 
-class NASAImageViewModel: NASAImageViewModelProtocol {
+class NASAImageViewModel: NASAImageViewModelProtocol, @unchecked Sendable {
     private let networkService: NetworkServiceProtocol
     private let imageCache: ImageCacheProtocol
     
