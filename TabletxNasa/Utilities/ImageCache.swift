@@ -12,7 +12,6 @@ protocol ImageCacheProtocol {
     func getImage(forKey key: String) async -> UIImage?
 }
 
-@MainActor
 class ImageCache: ImageCacheProtocol {
     static let shared = ImageCache()
     
