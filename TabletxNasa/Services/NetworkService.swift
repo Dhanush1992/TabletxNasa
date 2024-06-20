@@ -7,12 +7,13 @@
 
 import Foundation
 
-protocol NetworkServiceProtocol {
+protocol NetworkServiceProtocol: Sendable {
     func fetchImages(searchQuery: String, page: Int, startYear: Int, endYear: Int) async -> Result<[NASAImage], Error>
     func fetchImageData(from url: URL) async -> Result<Data, Error>
 }
 
-class NetworkService: NetworkServiceProtocol {
+
+class NetworkService: NetworkServiceProtocol, @unchecked Sendable {
     static let shared = NetworkService()
     
     init() {}
